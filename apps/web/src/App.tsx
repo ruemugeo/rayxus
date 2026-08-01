@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 import { Engine, ENGINE } from "./engine";
-import Grid from "./renderer/Grid";
+import Camera from "./renderer/Camera";
 
 const engine = new Engine();
 
@@ -46,7 +46,7 @@ export default function App() {
         </aside>
 
         <main className="viewport">
-          <Grid />
+          <Camera />
         </main>
 
         <aside className="inspector">
