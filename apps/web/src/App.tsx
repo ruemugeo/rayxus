@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 import { Engine, ENGINE } from "./engine";
+import Grid from "./renderer/Grid";
 
 const engine = new Engine();
 
@@ -45,11 +46,7 @@ export default function App() {
         </aside>
 
         <main className="viewport">
-          <div className="viewport-placeholder">
-            <h1>Simulation Running</h1>
-
-            <h2>{tick}</h2>
-          </div>
+          <Grid />
         </main>
 
         <aside className="inspector">

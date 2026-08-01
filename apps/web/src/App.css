@@ -85,8 +85,7 @@ button{
 }
 
 .viewport{
-    display:grid;
-    place-items:center;
+    padding:20px;
 }
 
 .viewport-placeholder{
