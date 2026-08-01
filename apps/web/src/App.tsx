@@ -1,16 +1,34 @@
+import { useEffect, useState } from "react";
+
 import "./App.css";
+
 import { Engine, ENGINE } from "./engine";
 
 const engine = new Engine();
-engine.start();
 
 export default function App() {
+  const [tick, setTick] = useState(0);
+
+  useEffect(() => {
+    engine.start();
+
+    const ui = window.setInterval(() => {
+      setTick(engine.getState().tick);
+    }, 100);
+
+    return () => {
+      clearInterval(ui);
+      engine.stop();
+    };
+  }, []);
+
   return (
     <div className="app">
       <header className="topbar">
         <div className="logo">{ENGINE.name}</div>
+
         <div className="version">
-          {ENGINE.version} • {ENGINE.stage}
+          {ENGINE.version} • Tick {tick}
         </div>
       </header>
 
@@ -28,8 +46,9 @@ export default function App() {
 
         <main className="viewport">
           <div className="viewport-placeholder">
-            <h1>Simulation Viewport</h1>
-            <p>Engine Status: {engine.isRunning ? "🟢 Running" : "🔴 Stopped"}</p>
+            <h1>Simulation Running</h1>
+
+            <h2>{tick}</h2>
           </div>
         </main>
 
@@ -37,24 +56,19 @@ export default function App() {
           <h3>Inspector</h3>
 
           <div className="card">
-            <p>Engine</p>
-            <strong>{engine.isRunning ? "Running" : "Stopped"}</strong>
+            <p>Status</p>
+            <strong>Running</strong>
           </div>
 
           <div className="card">
-            <p>Version</p>
-            <strong>{ENGINE.version}</strong>
-          </div>
-
-          <div className="card">
-            <p>Build</p>
-            <strong>{ENGINE.build}</strong>
+            <p>Tick</p>
+            <strong>{tick}</strong>
           </div>
         </aside>
       </div>
 
       <footer className="statusbar">
-        {ENGINE.name} • Ready
+        Engine Loop Active
       </footer>
     </div>
   );
