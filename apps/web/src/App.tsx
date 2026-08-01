@@ -1,12 +1,17 @@
 import "./App.css";
+import { Engine, ENGINE } from "./engine";
+
+const engine = new Engine();
+engine.start();
 
 export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <div className="logo">RAYXUS</div>
-
-        <div className="version">v0.1 Early Access</div>
+        <div className="logo">{ENGINE.name}</div>
+        <div className="version">
+          {ENGINE.version} • {ENGINE.stage}
+        </div>
       </header>
 
       <div className="workspace">
@@ -24,8 +29,7 @@ export default function App() {
         <main className="viewport">
           <div className="viewport-placeholder">
             <h1>Simulation Viewport</h1>
-
-            <p>WebGPU renderer coming soon.</p>
+            <p>Engine Status: {engine.isRunning ? "🟢 Running" : "🔴 Stopped"}</p>
           </div>
         </main>
 
@@ -33,24 +37,24 @@ export default function App() {
           <h3>Inspector</h3>
 
           <div className="card">
-            <p>Status</p>
-            <strong>Ready</strong>
+            <p>Engine</p>
+            <strong>{engine.isRunning ? "Running" : "Stopped"}</strong>
           </div>
 
           <div className="card">
-            <p>Population</p>
-            <strong>0</strong>
+            <p>Version</p>
+            <strong>{ENGINE.version}</strong>
           </div>
 
           <div className="card">
-            <p>FPS</p>
-            <strong>--</strong>
+            <p>Build</p>
+            <strong>{ENGINE.build}</strong>
           </div>
         </aside>
       </div>
 
       <footer className="statusbar">
-        Rayxus Engine • Idle
+        {ENGINE.name} • Ready
       </footer>
     </div>
   );

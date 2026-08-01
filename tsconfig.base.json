@@ -2,8 +2,10 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+
     "module": "ESNext",
     "moduleResolution": "Bundler",
+
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
@@ -11,12 +13,12 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "noEmit": true,
+
     "jsx": "react-jsx",
-    "baseUrl": ".",
+
     "paths": {
       "@engine/*": ["packages/engine/src/*"],
-      "@shared/*": ["packages/shared/src/*"],
-      "@ui/*": ["packages/ui/src/*"]
+      "@shared/*": ["packages/shared/src/*"]
     }
   }
 }
