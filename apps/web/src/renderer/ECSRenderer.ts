@@ -4,9 +4,13 @@ const CELL_SIZE = 32;
 
 export function renderECS(ctx: CanvasRenderingContext2D) {
 
-  for (const [, position] of simulation.ecs.positions.entries()) {
+  for (const [entity, position] of simulation.ecs.positions.entries()) {
 
-    ctx.fillStyle = "#FF9800";
+    if (!simulation.ecs.citizens.has(entity)) {
+        continue;
+    }
+
+    ctx.fillStyle = "#FFD54F";
 
     ctx.beginPath();
 

@@ -19,12 +19,21 @@ export class Simulation {
 
     constructor() {
 
-        const citizen = this.ecs.create();
+        for (let i = 0; i < 25; i++) {
 
-        this.ecs.positions.add(citizen, {
-            x: 25,
-            y: 16
-        });
+            const entity = this.ecs.create();
+
+            this.ecs.positions.add(entity,{
+                x: Math.floor(Math.random() * this.world.width),
+                y: Math.floor(Math.random() * this.world.height)
+            });
+
+            this.ecs.citizens.add(entity,{
+                name: `Citizen ${i + 1}`,
+                age: 18 + Math.floor(Math.random() * 40)
+            });
+
+        }
         
 
         

@@ -2,10 +2,14 @@ import type { Entity } from "./Entity";
 import { createEntity } from "./Entity";
 import { ComponentStore } from "./ComponentStore";
 import type { Position } from "./components/Position";
+import type { Citizen } from "./components/Citizen";
+
 
 export class ECS {
 
     readonly positions = new ComponentStore<Position>();
+    
+    readonly citizens = new ComponentStore<Citizen>();
 
     private readonly entities = new Set<Entity>();
 
