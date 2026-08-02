@@ -3,9 +3,9 @@ import { SimulationClock } from "../time/SimulationClock";
 import { World } from "../world/World";
 import { Selection } from "../selection/Selection";
 import { ECS } from "../ecs/ECS";
-import { MovementSystem } from "../ecs/systems/MovementSystem";
 import { TimeSystem } from "../ecs/systems/TimeSystem";
 import { Scheduler } from "../ecs/Scheduler";
+import { SystemRegistry } from "../ecs/SystemRegistry";
 
 
 
@@ -19,18 +19,21 @@ export class Simulation {
 
     readonly selection = new Selection();
 
-    readonly movementSystem = new MovementSystem(
-        this.ecs,
-        this.world
-    );
+    readonly scheduler = new Scheduler();
+
+    readonly systems: SystemRegistry;
 
     readonly timeSystem = new TimeSystem();
-
-    readonly scheduler = new Scheduler();
 
     readonly clock = new SimulationClock();
 
     constructor() {
+
+        this.systems = new SystemRegistry(
+            this.ecs,
+            this.world,
+            this.scheduler
+        );
 
         for (let i = 0; i < 25; i++) {
 
@@ -46,9 +49,7 @@ export class Simulation {
                 age: 18 + Math.floor(Math.random() * 40)
             });
 
-            this.scheduler.schedule(1, () => {
-                this.movementSystem.update();
-            });
+           
 
             this.ecs.velocities.add(entity, {
 
