@@ -1,15 +1,19 @@
 export class Time {
-  private tick = 0;
+  private last = performance.now();
 
-  update(): void {
-    this.tick++;
-  }
+  deltaTime = 0;
 
-  getTick(): number {
-    return this.tick;
-  }
+  fps = 0;
 
-  reset(): void {
-    this.tick = 0;
+  update() {
+    const now = performance.now();
+
+    this.deltaTime = (now - this.last) / 1000;
+
+    this.last = now;
+
+    if (this.deltaTime > 0) {
+      this.fps = Math.round(1 / this.deltaTime);
+    }
   }
 }

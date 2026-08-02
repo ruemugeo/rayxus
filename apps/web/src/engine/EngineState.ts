@@ -1,5 +1,7 @@
 export interface EngineState {
   running: boolean;
-  tick: number;
+  paused: boolean;
+  speed: number;
   fps: number;
+  ups: number;
 }

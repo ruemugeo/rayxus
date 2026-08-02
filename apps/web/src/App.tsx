@@ -2,24 +2,24 @@ import { useEffect, useState } from "react";
 
 import "./App.css";
 
-import { Engine, ENGINE } from "./engine";
+import { engine } from "./engine";
 import Camera from "./renderer/Camera";
 import { simulation } from "./simulation/Simulation";
+import DeveloperHUD from "./ui/DeveloperHUD";
 
-const engine = new Engine();
 
 export default function App() {
   const [, refresh] = useState(0);
 
   useEffect(() => {
-    engine.start();
+     engine.start();
 
-    const ui = window.setInterval(() => {
-      refresh((v) => v + 1);
-    }, 100);
+      const unsubscribe = engine.subscribe(() => {
+        refresh(v => v + 1);
+      });
 
     return () => {
-      clearInterval(ui);
+      unsubscribe();
       engine.stop();
     };
   }, []);
@@ -27,10 +27,10 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <div className="logo">{ENGINE.name}</div>
+        <div className="logo">Rayxus</div>
 
         <div className="version">
-          {ENGINE.version} • Day {simulation.clock.day}
+          v0.1.0-alpha • Day {simulation.clock.day}
         </div>
       </header>
 
@@ -83,6 +83,7 @@ export default function App() {
       <footer className="statusbar">
         Engine Loop Active
       </footer>
+      <DeveloperHUD />
     </div>
   );
 }

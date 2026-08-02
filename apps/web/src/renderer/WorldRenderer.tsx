@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { simulation } from "../simulation/Simulation";
 
-const WORLD_SIZE = 40;
+const world = simulation.world;
 const CELL_SIZE = 50;
 
 export default function WorldRenderer() {
@@ -11,8 +11,8 @@ export default function WorldRenderer() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    canvas.width = WORLD_SIZE * CELL_SIZE;
-    canvas.height = WORLD_SIZE * CELL_SIZE;
+    canvas.width = world.width * CELL_SIZE;
+    canvas.height = world.height * CELL_SIZE;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -20,21 +20,48 @@ export default function WorldRenderer() {
     let animationId = 0;
 
     const render = () => {
-      simulation.update();
+      //simulation.update();
 
       ctx.fillStyle = "#162236";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+        for (const tile of world.getTiles()) {
+
+        switch (tile.type) {
+
+          case "grass":
+            ctx.fillStyle = "#4CAF50";
+            break;
+
+          case "water":
+            ctx.fillStyle = "#2196F3";
+            break;
+
+          case "forest":
+            ctx.fillStyle = "#2E7D32";
+            break;
+
+        }
+
+  ctx.fillRect(
+    tile.x * CELL_SIZE,
+    tile.y * CELL_SIZE,
+    CELL_SIZE,
+    CELL_SIZE
+  );
+
+        }
+
       ctx.strokeStyle = "rgba(255,255,255,.15)";
 
-      for (let x = 0; x <= WORLD_SIZE; x++) {
+      for (let x = 0; x <= world.width; x++) {
         ctx.beginPath();
         ctx.moveTo(x * CELL_SIZE, 0);
         ctx.lineTo(x * CELL_SIZE, canvas.height);
         ctx.stroke();
       }
 
-      for (let y = 0; y <= WORLD_SIZE; y++) {
+      for (let y = 0; y <= world.height; y++) {
         ctx.beginPath();
         ctx.moveTo(0, y * CELL_SIZE);
         ctx.lineTo(canvas.width, y * CELL_SIZE);
@@ -62,13 +89,15 @@ export default function WorldRenderer() {
     return () => cancelAnimationFrame(animationId);
   }, []);
 
+
+
   return (
     <canvas
       ref={canvasRef}
       style={{
         display: "block",
-        width: WORLD_SIZE * CELL_SIZE,
-        height: WORLD_SIZE * CELL_SIZE,
+        width: world.width * CELL_SIZE,
+        height: world.height * CELL_SIZE,
       }}
     />
   );

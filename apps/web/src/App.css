@@ -133,3 +133,37 @@ button{
     border-top:1px solid var(--border);
     color:var(--muted);
 }
+
+.developer-hud {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+
+    width: 240px;
+
+    background: rgba(0,0,0,.82);
+
+    border: 1px solid #444;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    color: white;
+
+    font-size: 13px;
+
+    z-index: 9999;
+
+    backdrop-filter: blur(8px);
+}
+
+.developer-hud h3{
+    margin-top:0;
+}
+
+.developer-hud hr{
+    border:none;
+    border-top:1px solid #333;
+    margin:10px 0;
+}
