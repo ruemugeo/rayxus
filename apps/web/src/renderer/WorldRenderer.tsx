@@ -78,6 +78,32 @@ export default function WorldRenderer() {
         ctx.stroke();
       }
 
+      for (const resource of simulation.world.resources.getAll()) {
+
+        switch (resource.type) {
+
+          case "tree":
+
+            ctx.fillStyle = "#1B5E20";
+
+            ctx.beginPath();
+
+            ctx.arc(
+              resource.x * CELL_SIZE + CELL_SIZE / 2,
+              resource.y * CELL_SIZE + CELL_SIZE / 2,
+              CELL_SIZE * 0.28,
+              0,
+              Math.PI * 2
+            );
+
+            ctx.fill();
+
+            break;
+
+        }
+
+      }
+
       for (const citizen of simulation.citizens.getAll()) {
         ctx.beginPath();
         ctx.fillStyle = citizen.color;

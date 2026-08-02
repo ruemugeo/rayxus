@@ -55,6 +55,9 @@ export default function DeveloperHUD() {
         2
       )}
       </pre>
+      <p>
+      Resources: {simulation.world.resources.getAll().length}
+      </p>
     </div>
   );
 }

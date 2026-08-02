@@ -1,6 +1,8 @@
 import type { Tile } from "./Tile";
 import { Random } from "./Random";
 import { TerrainGenerator } from "./generation/TerrainGenerator";
+import { ResourceManager } from "../resources/ResourceManager";
+import { ResourceType } from "../resources/Resource";
 
 export class World {
 
@@ -10,9 +12,12 @@ export class World {
 
   readonly seed = 987654;
 
+  readonly resources = new ResourceManager();
+
   private readonly random = new Random(this.seed);
 
   private readonly tiles: Tile[][] = [];
+
 
   constructor() {
     this.generate();
@@ -38,7 +43,33 @@ export class World {
 
     }
 
+    let id = 1;
+
+for (const tile of this.getTiles()) {
+
+  if (
+    tile.type === "forest" &&
+    this.random.next() < 0.35
+  ) {
+
+    this.resources.add({
+      id: id++,
+
+      x: tile.x,
+      y: tile.y,
+
+      type: ResourceType.Tree,
+
+      amount: 100
+    });
+
   }
+
+}
+  
+
+  }
+
 
   getTiles() {
     return this.tiles.flat();
