@@ -19,6 +19,8 @@ body,
 #root{
     width:100%;
     height:100%;
+    margin: 0;
+    overflow: hidden;
 }
 
 body{
@@ -34,9 +36,11 @@ button{
 }
 
 .app{
+    width: 100%;
     height:100vh;
     display:grid;
     grid-template-rows:60px 1fr 34px;
+    overflow: hidden;
 }
 
 .topbar{
@@ -86,6 +90,8 @@ button{
 
 .viewport{
     padding:20px;
+    overflow: hidden;
+    height: 100%;
 }
 
 .viewport-placeholder{

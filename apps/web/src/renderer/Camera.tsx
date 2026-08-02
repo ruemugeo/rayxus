@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import Grid from "./Grid";
+import CanvasRenderer from "./CanvasRenderer";
+import CitizenLayer from "./CitizenLayer";
 
 export default function Camera() {
   const [scale, setScale] = useState(1);
@@ -8,8 +9,9 @@ export default function Camera() {
   const dragging = useRef(false);
   const last = useRef({ x: 0, y: 0 });
 
-  function wheel(e: React.WheelEvent) {
+  function wheel(e: React.WheelEvent<HTMLDivElement>) {
     e.preventDefault();
+    e.stopPropagation();
 
     setScale((s) => {
       const next = s - e.deltaY * 0.001;
@@ -18,7 +20,7 @@ export default function Camera() {
   }
 
   function down(e: React.MouseEvent) {
-    if (e.button !== 1) return;
+    if (e.button !== 0) return;
 
     dragging.current = true;
 
@@ -55,7 +57,8 @@ export default function Camera() {
         width: "100%",
         height: "100%",
         overflow: "hidden",
-        cursor: dragging.current ? "grabbing" : "grab"
+        cursor: dragging.current ? "grabbing" : "grab",
+        userSelect: "none",
       }}
       onWheel={wheel}
       onMouseDown={down}
@@ -65,13 +68,16 @@ export default function Camera() {
     >
       <div
         style={{
-          width: "100%",
-          height: "100%",
-          transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
-          transformOrigin: "center center"
+        position:"relative",
+        width:"2000px",
+        height:"2000px",
+        transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
+        transformOrigin: "center center",
         }}
       >
-        <Grid />
+        <CanvasRenderer />
+
+        <CitizenLayer />
       </div>
     </div>
   );
