@@ -1,18 +1,20 @@
 import { CitizenManager } from "../citizens/CitizenManager";
+import { SimulationClock } from "../time/SimulationClock";
 
 export class Simulation {
-  public readonly citizens = new CitizenManager(100);
 
-  private tick = 0;
+    readonly citizens = new CitizenManager(100);
 
-  update() {
-    this.tick++;
-    this.citizens.update();
-  }
+    readonly clock = new SimulationClock();
 
-  getTick() {
-    return this.tick;
-  }
+    update(){
+
+        this.clock.update();
+
+        this.citizens.update();
+
+    }
+
 }
 
 export const simulation = new Simulation();

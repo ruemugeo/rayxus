@@ -25,7 +25,7 @@ export default function WorldRenderer() {
       ctx.fillStyle = "#162236";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.strokeStyle = "rgba(255,255,255,.08)";
+      ctx.strokeStyle = "rgba(255,255,255,.15)";
 
       for (let x = 0; x <= WORLD_SIZE; x++) {
         ctx.beginPath();

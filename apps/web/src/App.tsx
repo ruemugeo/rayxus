@@ -4,17 +4,18 @@ import "./App.css";
 
 import { Engine, ENGINE } from "./engine";
 import Camera from "./renderer/Camera";
+import { simulation } from "./simulation/Simulation";
 
 const engine = new Engine();
 
 export default function App() {
-  const [tick, setTick] = useState(0);
+  const [, refresh] = useState(0);
 
   useEffect(() => {
     engine.start();
 
     const ui = window.setInterval(() => {
-      setTick(engine.getState().tick);
+      refresh((v) => v + 1);
     }, 100);
 
     return () => {
@@ -29,7 +30,7 @@ export default function App() {
         <div className="logo">{ENGINE.name}</div>
 
         <div className="version">
-          {ENGINE.version} • Tick {tick}
+          {ENGINE.version} • Day {simulation.clock.day}
         </div>
       </header>
 
@@ -58,8 +59,13 @@ export default function App() {
           </div>
 
           <div className="card">
-            <p>Tick</p>
-            <strong>{tick}</strong>
+            <p>Time</p>
+            <strong>{simulation.clock.timeString}</strong>
+          </div>
+
+          <div className="card">
+            <p>Day</p>
+            <strong>{simulation.clock.day}</strong>
           </div>
 
           <div className="card">
