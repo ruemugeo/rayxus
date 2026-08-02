@@ -29,19 +29,29 @@ export default function WorldRenderer() {
 
         switch (tile.type) {
 
-          case "grass":
-            ctx.fillStyle = "#4CAF50";
-            break;
-
           case "water":
-            ctx.fillStyle = "#2196F3";
+            ctx.fillStyle = "#3B82F6";
             break;
 
-          case "forest":
-            ctx.fillStyle = "#2E7D32";
-            break;
+          case "grass": {
 
-        }
+            const g = Math.floor(120 + tile.height * 60);
+
+            ctx.fillStyle = `rgb(40,${g},40)`;
+
+            break;
+          }
+
+          case "forest": {
+
+            const g = Math.floor(70 + tile.height * 40);
+
+            ctx.fillStyle = `rgb(20,${g},20)`;
+
+            break;
+          }
+
+}
 
   ctx.fillRect(
     tile.x * CELL_SIZE,

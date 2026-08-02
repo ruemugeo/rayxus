@@ -8,7 +8,7 @@ export class World {
 
   readonly height = 40;
 
-  readonly seed = 123456;
+  readonly seed = 987654;
 
   private readonly random = new Random(this.seed);
 
@@ -26,19 +26,33 @@ export class World {
 
       for (let x = 0; x < this.width; x++) {
 
-        let type: TileType = TileType.Grass;
+        const height = this.random.next();
 
-        const r = this.random.next();
+        let type: TileType;
 
-        if (r < 0.08) {
+        if (height < 0.25) {
           type = TileType.Water;
-        } else if (r < 0.18) {
+        } else if (height < 0.75) {
+          type = TileType.Grass;
+        } else {
           type = TileType.Forest;
         }
+
+
+        //let type: TileType = TileType.Grass;
+
+        //const r = this.random.next();
+
+        //if (r < 0.08) {
+       //   type = TileType.Water;
+       // } else if (r < 0.18) {
+       //   type = TileType.Forest;
+       // }
 
         this.tiles.push({
         x,
         y,
+        height,
         type
         });
 

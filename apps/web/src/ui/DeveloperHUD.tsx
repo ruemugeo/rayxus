@@ -45,6 +45,7 @@ export default function DeveloperHUD() {
       <p>Day: {simulation.clock.day}</p>
       <p>Time: {simulation.clock.timeString}</p>
       <p>Seed: {simulation.world.seed}</p>
+      <p>Tiles: {simulation.world.getTiles().length}</p>
     </div>
   );
 }
