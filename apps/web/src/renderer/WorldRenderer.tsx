@@ -80,11 +80,27 @@ export default function WorldRenderer() {
 
       for (const resource of simulation.world.resources.getAll()) {
 
+        const x = resource.x * CELL_SIZE + CELL_SIZE / 2;
+        const y = resource.y * CELL_SIZE + CELL_SIZE / 2;
+
         switch (resource.type) {
 
           case "tree":
 
-            ctx.fillStyle = "#1B5E20";
+            // trunk
+            ctx.fillStyle = "#6D4C41";
+            ctx.fillRect(
+                x - 1,
+                y + 2,
+                2,
+                4
+            );
+
+            // leaves
+            ctx.fillStyle = "#2ECC71";
+            ctx.beginPath();
+            ctx.arc(x, y, CELL_SIZE * 0.28, 0, Math.PI * 2);
+            ctx.fill();
 
             ctx.beginPath();
 

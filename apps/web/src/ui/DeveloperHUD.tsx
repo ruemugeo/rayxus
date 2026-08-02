@@ -49,12 +49,14 @@ export default function DeveloperHUD() {
       <p>Center Tile:</p>
 
       <pre>
-      {JSON.stringify(
-        simulation.world.getTile(20, 20),
-        null,
-        2
-      )}
+          X: 20
+          Y: 20
+          Height: 0.45
+          Terrain: Grass
       </pre>
+      <p>
+      World: {simulation.world.width} × {simulation.world.height}
+      </p>
       <p>
       Resources: {simulation.world.resources.getAll().length}
       </p>

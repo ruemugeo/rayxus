@@ -3,7 +3,10 @@ import WorldRenderer from "./WorldRenderer";
 
 export default function Camera() {
   const [scale, setScale] = useState(1);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [offset, setOffset] = useState({
+     x: -700, 
+     y: -700 
+  });
 
   const dragging = useRef(false);
   const last = useRef({ x: 0, y: 0 });
@@ -14,7 +17,7 @@ export default function Camera() {
 
     setScale((s) => {
       const next = s - e.deltaY * 0.001;
-      return Math.min(5, Math.max(0.3, next));
+      return Math.min(8, Math.max(0.15, next));
     });
   }
 

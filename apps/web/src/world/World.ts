@@ -6,9 +6,9 @@ import { ResourceType } from "../resources/Resource";
 
 export class World {
 
-  readonly width = 40;
+  readonly width = 128;
 
-  readonly height = 40;
+  readonly height = 128;
 
   readonly seed = 987654;
 
