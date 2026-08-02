@@ -1,4 +1,3 @@
-import { CitizenManager } from "../citizens/CitizenManager";
 import { SimulationClock } from "../time/SimulationClock";
 import { World } from "../world/World";
 import { Selection } from "../selection/Selection";
@@ -12,8 +11,6 @@ import type { EngineContext } from "../engine/EngineContext";
 
 
 export class Simulation {
-
-    readonly citizens = new CitizenManager(100);
 
     readonly ecs = new ECS();
 
@@ -60,6 +57,32 @@ constructor() {
         this.ecs.citizens.add(entity, {
             name: `Citizen ${i + 1}`,
             age: 18 + Math.floor(Math.random() * 40)
+        });
+
+        this.ecs.needs.add(entity, {
+
+            hunger: 100,
+
+            thirst: 100,
+
+            energy: 100
+
+        });
+
+        this.ecs.tasks.add(entity, {
+
+            current: "idle"
+
+        });
+
+        this.ecs.destinations.add(entity, {
+
+            x: Math.floor(Math.random() * this.world.width),
+
+            y: Math.floor(Math.random() * this.world.height),
+
+            reached: false
+
         });
 
         this.ecs.velocities.add(entity, {

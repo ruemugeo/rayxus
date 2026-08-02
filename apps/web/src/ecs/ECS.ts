@@ -4,15 +4,24 @@ import { ComponentStore } from "./ComponentStore";
 import type { Position } from "./components/Position";
 import type { Citizen } from "./components/Citizen";
 import type { Velocity } from "./components/Velocity";
+import type { Needs } from "./components/Needs";
+import type { Task } from "./components/Task";
+import type { Destination } from "./components/Destination";
 
 
 export class ECS {
 
     readonly positions = new ComponentStore<Position>();
-    
+
     readonly velocities = new ComponentStore<Velocity>();
 
     readonly citizens = new ComponentStore<Citizen>();
+
+    readonly needs = new ComponentStore<Needs>();
+
+    readonly tasks = new ComponentStore<Task>();
+
+    readonly destinations = new ComponentStore<Destination>();
 
     private readonly entities = new Set<Entity>();
 

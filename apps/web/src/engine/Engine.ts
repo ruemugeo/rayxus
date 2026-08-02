@@ -41,8 +41,6 @@ export class Engine {
 
   update() {
 
-    console.log("ENGINE");
-
     if (this.state.paused) return;
 
     simulation.update();

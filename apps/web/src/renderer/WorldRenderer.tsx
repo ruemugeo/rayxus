@@ -140,17 +140,22 @@ export default function WorldRenderer() {
 
       renderECS(ctx);
 
-      for (const citizen of simulation.citizens.getAll()) {
+      for (const [, position] of simulation.ecs.positions.entries()) {
+
         ctx.beginPath();
-        ctx.fillStyle = citizen.color;
+
+        ctx.fillStyle = "#FFD54F";
+
         ctx.arc(
-          citizen.x * CELL_SIZE + CELL_SIZE / 2,
-          citizen.y * CELL_SIZE + CELL_SIZE / 2,
+          position.x * CELL_SIZE + CELL_SIZE / 2,
+          position.y * CELL_SIZE + CELL_SIZE / 2,
           6,
           0,
           Math.PI * 2
         );
+
         ctx.fill();
+
       }
 
       animationId = requestAnimationFrame(render);

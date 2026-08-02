@@ -11,39 +11,44 @@ export class MovementSystem {
   update() {
 
     for (const [entity, position] of this.context.ecs.positions.entries()) {
+        
+        const destination = this.context.ecs.destinations.get(entity);
 
-        const velocity = this.context.ecs.velocities.get(entity);
-
-        if (!velocity) {
+        if (!destination) {
             continue;
         }
 
-        position.x += velocity.x;
-        position.y += velocity.y;
+        const dx = destination.x - position.x;
+        const dy = destination.y - position.y;
 
-        if (
-            position.x < 0 ||
-            position.x > this.context.world.width - 1
-        ) {
-            velocity.x *= -1;
+        const distance = Math.hypot(dx, dy);
+
+        if (distance < 0.1) {
+
+            destination.reached = true;
+
         }
 
-        if (
-            position.y < 0 ||
-            position.y > this.context.world.height - 1
-        ) {
-            velocity.y *= -1;
+        if (destination.reached) {
+
+            destination.x = Math.floor(
+                Math.random() * this.context.world.width
+            );
+
+            destination.y = Math.floor(
+                Math.random() * this.context.world.height
+            );
+
+            destination.reached = false;
+
+            continue;
+
         }
 
-        position.x = Math.max(
-            0,
-            Math.min(this.context.world.width - 1, position.x)
-        );
+        const speed = 0.03;
 
-        position.y = Math.max(
-            0,
-            Math.min(this.context.world.height - 1, position.y)
-        );
+        position.x += (dx / distance) * speed;
+        position.y += (dy / distance) * speed;
 
     }
 
