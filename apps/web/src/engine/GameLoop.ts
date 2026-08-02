@@ -6,10 +6,17 @@ export class GameLoop {
 
   private animationFrame = 0;
 
+  private readonly update: () => void;
+
+  private readonly render: () => void;
+
   constructor(
-    private readonly update: () => void,
-    private readonly render: () => void
-  ) {}
+    update: () => void,
+    render: () => void
+  ) {
+    this.update = update;
+    this.render = render;
+  }
 
   start() {
 

@@ -1,21 +1,18 @@
-import { ECS } from "../ECS";
-import { World } from "../../world/World";
+import type { EngineContext } from "../../engine/EngineContext";
 
 export class MovementSystem {
 
-  private readonly ecs: ECS;
-  private readonly world: World;
+  private readonly context: EngineContext;
 
-  constructor(ecs: ECS, world: World) {
-    this.ecs = ecs;
-    this.world = world;
+  constructor(context: EngineContext) {
+    this.context = context;
   }
 
   update() {
 
-    for (const [entity, position] of this.ecs.positions.entries()) {
+    for (const [entity, position] of this.context.ecs.positions.entries()) {
 
-        const velocity = this.ecs.velocities.get(entity);
+        const velocity = this.context.ecs.velocities.get(entity);
 
         if (!velocity) {
             continue;
@@ -26,26 +23,26 @@ export class MovementSystem {
 
         if (
             position.x < 0 ||
-            position.x > this.world.width - 1
+            position.x > this.context.world.width - 1
         ) {
             velocity.x *= -1;
         }
 
         if (
             position.y < 0 ||
-            position.y > this.world.height - 1
+            position.y > this.context.world.height - 1
         ) {
             velocity.y *= -1;
         }
 
         position.x = Math.max(
             0,
-            Math.min(this.world.width - 1, position.x)
+            Math.min(this.context.world.width - 1, position.x)
         );
 
         position.y = Math.max(
             0,
-            Math.min(this.world.height - 1, position.y)
+            Math.min(this.context.world.height - 1, position.y)
         );
 
     }
