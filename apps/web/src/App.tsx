@@ -94,6 +94,11 @@ export default function App() {
               <strong>No tile selected</strong>
             )}
           </div>
+
+          <div className="card">
+            <p>Tick</p>
+            <strong>{simulation.timeSystem.getTick()}</strong>
+          </div>
         </aside>
       </div>
 

@@ -4,6 +4,7 @@ import { World } from "../world/World";
 import { Selection } from "../selection/Selection";
 import { ECS } from "../ecs/ECS";
 import { MovementSystem } from "../ecs/systems/MovementSystem";
+import { TimeSystem } from "../ecs/systems/TimeSystem";
 
 
 export class Simulation {
@@ -16,7 +17,12 @@ export class Simulation {
 
     readonly selection = new Selection();
 
-    readonly movementSystem = new MovementSystem();
+    readonly movementSystem = new MovementSystem(
+        this.ecs,
+        this.world
+    );
+
+    readonly timeSystem = new TimeSystem();
 
     readonly clock = new SimulationClock();
 
@@ -36,6 +42,14 @@ export class Simulation {
                 age: 18 + Math.floor(Math.random() * 40)
             });
 
+            this.ecs.velocities.add(entity, {
+
+                x: (Math.random() - 0.5) * 0.03,
+
+                y: (Math.random() - 0.5) * 0.03
+
+            });
+
         }
         
 
@@ -45,6 +59,8 @@ export class Simulation {
     update() {
 
         this.clock.update();
+
+        this.timeSystem.update();
 
         this.movementSystem.update();
 

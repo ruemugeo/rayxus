@@ -1,26 +1,55 @@
-import { simulation } from "../../simulation/Simulation";
+import { ECS } from "../ECS";
+import { World } from "../../world/World";
 
 export class MovementSystem {
 
-    update() {
+  private readonly ecs: ECS;
+  private readonly world: World;
 
-        for (const [, position] of simulation.ecs.positions.entries()) {
+  constructor(ecs: ECS, world: World) {
+    this.ecs = ecs;
+    this.world = world;
+  }
 
-            position.x += (Math.random() - 0.5) * 0.03;
-            position.y += (Math.random() - 0.5) * 0.03;
+  update() {
 
-            position.x = Math.max(
-                0,
-                Math.min(simulation.world.width - 1, position.x)
-            );
+    for (const [entity, position] of this.ecs.positions.entries()) {
 
-            position.y = Math.max(
-                0,
-                Math.min(simulation.world.height - 1, position.y)
-            );
+        const velocity = this.ecs.velocities.get(entity);
 
+        if (!velocity) {
+            continue;
         }
 
+        position.x += velocity.x;
+        position.y += velocity.y;
+
+        if (
+            position.x < 0 ||
+            position.x > this.world.width - 1
+        ) {
+            velocity.x *= -1;
+        }
+
+        if (
+            position.y < 0 ||
+            position.y > this.world.height - 1
+        ) {
+            velocity.y *= -1;
+        }
+
+        position.x = Math.max(
+            0,
+            Math.min(this.world.width - 1, position.x)
+        );
+
+        position.y = Math.max(
+            0,
+            Math.min(this.world.height - 1, position.y)
+        );
+
     }
+
+  }
 
 }
