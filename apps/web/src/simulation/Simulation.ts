@@ -6,6 +6,7 @@ import { ECS } from "../ecs/ECS";
 import { TimeSystem } from "../ecs/systems/TimeSystem";
 import { Scheduler } from "../ecs/Scheduler";
 import { SystemRegistry } from "../ecs/SystemRegistry";
+import { EventBus } from "../ecs/EventBus";
 
 
 
@@ -21,6 +22,8 @@ export class Simulation {
 
     readonly scheduler = new Scheduler();
 
+    readonly eventBus = new EventBus();
+
     readonly systems: SystemRegistry;
 
     readonly timeSystem = new TimeSystem();
@@ -32,8 +35,17 @@ export class Simulation {
         this.systems = new SystemRegistry(
             this.ecs,
             this.world,
-            this.scheduler
+            this.scheduler,
+            this.eventBus
         );
+
+        this.eventBus.on("hello", (message: string) => {
+
+            console.log(message);
+
+        });
+
+        this.eventBus.emit("hello", "Event Bus Working");
 
         for (let i = 0; i < 25; i++) {
 
