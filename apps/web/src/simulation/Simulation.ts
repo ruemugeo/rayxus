@@ -3,6 +3,7 @@ import { SimulationClock } from "../time/SimulationClock";
 import { World } from "../world/World";
 import { Selection } from "../selection/Selection";
 import { ECS } from "../ecs/ECS";
+import { MovementSystem } from "../ecs/systems/MovementSystem";
 
 
 export class Simulation {
@@ -14,6 +15,8 @@ export class Simulation {
     readonly world = new World();
 
     readonly selection = new Selection();
+
+    readonly movementSystem = new MovementSystem();
 
     readonly clock = new SimulationClock();
 
@@ -42,6 +45,8 @@ export class Simulation {
     update() {
 
         this.clock.update();
+
+        this.movementSystem.update();
 
         this.citizens.update();
 
