@@ -22,16 +22,12 @@ export class Simulation {
         const citizen = this.ecs.create();
 
         this.ecs.positions.add(citizen, {
-            x: 12,
-            y: 8
+            x: 25,
+            y: 16
         });
+        
 
-        console.log(this.ecs.positions.get(citizen));
-
-        for (const [entity, position] of this.ecs.positions.entries()) {
-            console.log(entity, position);
-        }
-
+        
     }
 
     update() {

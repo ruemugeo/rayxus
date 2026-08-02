@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import { simulation } from "../simulation/Simulation";
+import { renderECS } from "./ECSRenderer";
+
 
 const world = simulation.world;
 const CELL_SIZE = 50;
@@ -135,6 +137,8 @@ export default function WorldRenderer() {
         );
 
       }
+
+      renderECS(ctx);
 
       for (const citizen of simulation.citizens.getAll()) {
         ctx.beginPath();
