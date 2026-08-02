@@ -59,5 +59,46 @@ export class World {
   );
 }
 
+getNeighbors(x: number, y: number) {
+  const neighbors: Tile[] = [];
+
+  const offsets = [
+    [0, -1],
+    [1, 0],
+    [0, 1],
+    [-1, 0],
+  ];
+
+  for (const [dx, dy] of offsets) {
+    const tile = this.getTile(x + dx, y + dy);
+
+    if (tile) {
+      neighbors.push(tile);
+    }
+  }
+
+  return neighbors;
+}
+
+getTilesInRadius(x: number, y: number, radius: number) {
+  const tiles: Tile[] = [];
+
+  for (let yy = y - radius; yy <= y + radius; yy++) {
+
+    for (let xx = x - radius; xx <= x + radius; xx++) {
+
+      const tile = this.getTile(xx, yy);
+
+      if (tile) {
+        tiles.push(tile);
+      }
+
+    }
+
+  }
+
+  return tiles;
+}
+
 }
 

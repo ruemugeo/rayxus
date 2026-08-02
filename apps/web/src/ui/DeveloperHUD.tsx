@@ -46,6 +46,15 @@ export default function DeveloperHUD() {
       <p>Time: {simulation.clock.timeString}</p>
       <p>Seed: {simulation.world.seed}</p>
       <p>Tiles: {simulation.world.getTiles().length}</p>
+      <p>Center Tile:</p>
+
+      <pre>
+      {JSON.stringify(
+        simulation.world.getTile(20, 20),
+        null,
+        2
+      )}
+      </pre>
     </div>
   );
 }
