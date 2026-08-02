@@ -12,7 +12,7 @@ export class World {
 
   private readonly random = new Random(this.seed);
 
-  private readonly tiles: Tile[] = [];
+  private readonly tiles: Tile[][] = [];
 
   constructor() {
     this.generate();
@@ -24,20 +24,40 @@ export class World {
 
     this.tiles.length = 0;
 
-    this.tiles.push(
-      ...generator.generate(this.width, this.height)
-    );
+    const generated = generator.generate(this.width, this.height);
+
+    for (let y = 0; y < this.height; y++) {
+
+      this.tiles[y] = [];
+
+      for (let x = 0; x < this.width; x++) {
+
+        this.tiles[y][x] = generated[y * this.width + x];
+
+      }
+
+    }
 
   }
 
   getTiles() {
-    return this.tiles;
+    return this.tiles.flat();
   }
 
   getTile(x: number, y: number) {
 
-    return this.tiles[y * this.width + x];
+    return this.tiles[y]?.[x];
 
   }
 
+  isInside(x: number, y: number) {
+  return (
+    x >= 0 &&
+    x < this.width &&
+    y >= 0 &&
+    y < this.height
+  );
 }
+
+}
+
