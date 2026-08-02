@@ -120,6 +120,22 @@ export default function WorldRenderer() {
 
       }
 
+      const selected = simulation.selection.getTile();
+
+      if (selected) {
+
+        ctx.strokeStyle = "#FFD54F";
+        ctx.lineWidth = 2;
+
+        ctx.strokeRect(
+          selected.x * CELL_SIZE,
+          selected.y * CELL_SIZE,
+          CELL_SIZE,
+          CELL_SIZE
+        );
+
+      }
+
       for (const citizen of simulation.citizens.getAll()) {
         ctx.beginPath();
         ctx.fillStyle = citizen.color;

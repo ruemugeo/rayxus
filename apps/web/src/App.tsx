@@ -10,6 +10,7 @@ import DeveloperHUD from "./ui/DeveloperHUD";
 
 export default function App() {
   const [, refresh] = useState(0);
+  const selected = simulation.selection.getTile();
 
   useEffect(() => {
      engine.start();
@@ -51,6 +52,7 @@ export default function App() {
         </main>
 
         <aside className="inspector">
+          
           <h3>Inspector</h3>
 
           <div className="card">
@@ -76,6 +78,21 @@ export default function App() {
           <div className="card">
             <p>Simulation</p>
             <strong>Running</strong>
+          </div>
+
+          <div className="card">
+            <p>Selected Tile</p>
+
+            {selected ? (
+              <>
+                <p>X: {selected.x}</p>
+                <p>Y: {selected.y}</p>
+                <p>Terrain: {selected.type}</p>
+                <p>Height: {selected.height.toFixed(2)}</p>
+              </>
+            ) : (
+              <strong>No tile selected</strong>
+            )}
           </div>
         </aside>
       </div>

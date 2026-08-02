@@ -3,12 +3,15 @@ import { Random } from "./Random";
 import { TerrainGenerator } from "./generation/TerrainGenerator";
 import { ResourceManager } from "../resources/ResourceManager";
 import { ResourceType } from "../resources/Resource";
+import { ECS } from "../ecs/ECS";
 
 export class World {
 
   readonly width = 128;
 
   readonly height = 128;
+
+  readonly ecs = new ECS();
 
   readonly seed = 987654;
 
@@ -20,8 +23,15 @@ export class World {
 
 
   constructor() {
+
+    const e = this.ecs.create();
+
+    console.log("Entity:", e);
+
     this.generate();
   }
+
+  
 
   private generate() {
 
