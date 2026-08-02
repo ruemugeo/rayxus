@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
-import CanvasRenderer from "./CanvasRenderer";
-import CitizenLayer from "./CitizenLayer";
+import WorldRenderer from "./WorldRenderer";
 
 export default function Camera() {
   const [scale, setScale] = useState(1);
@@ -75,9 +74,8 @@ export default function Camera() {
         transformOrigin: "center center",
         }}
       >
-        <CanvasRenderer />
+        <WorldRenderer />
 
-        <CitizenLayer />
       </div>
     </div>
   );

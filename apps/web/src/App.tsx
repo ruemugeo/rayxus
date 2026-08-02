@@ -61,6 +61,16 @@ export default function App() {
             <p>Tick</p>
             <strong>{tick}</strong>
           </div>
+
+          <div className="card">
+            <p>Population</p>
+            <strong>100</strong>
+          </div>
+
+          <div className="card">
+            <p>Simulation</p>
+            <strong>Running</strong>
+          </div>
         </aside>
       </div>
 
