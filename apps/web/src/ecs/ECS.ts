@@ -1,9 +1,13 @@
 import type { Entity } from "./Entity";
 import { createEntity } from "./Entity";
+import { ComponentStore } from "./ComponentStore";
+import type { Position } from "./components/Position";
 
 export class ECS {
 
-  private readonly entities = new Set<Entity>();
+    readonly positions = new ComponentStore<Position>();
+
+    private readonly entities = new Set<Entity>();
 
   create(): Entity {
 

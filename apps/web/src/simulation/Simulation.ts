@@ -10,14 +10,31 @@ export class Simulation {
     readonly citizens = new CitizenManager(100);
 
     readonly ecs = new ECS();
-    
+
     readonly world = new World();
-    
+
     readonly selection = new Selection();
 
     readonly clock = new SimulationClock();
 
-    update(){
+    constructor() {
+
+        const citizen = this.ecs.create();
+
+        this.ecs.positions.add(citizen, {
+            x: 12,
+            y: 8
+        });
+
+        console.log(this.ecs.positions.get(citizen));
+
+        for (const [entity, position] of this.ecs.positions.entries()) {
+            console.log(entity, position);
+        }
+
+    }
+
+    update() {
 
         this.clock.update();
 
@@ -28,3 +45,4 @@ export class Simulation {
 }
 
 export const simulation = new Simulation();
+
