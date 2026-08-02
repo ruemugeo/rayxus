@@ -5,6 +5,8 @@ import { Selection } from "../selection/Selection";
 import { ECS } from "../ecs/ECS";
 import { MovementSystem } from "../ecs/systems/MovementSystem";
 import { TimeSystem } from "../ecs/systems/TimeSystem";
+import { Scheduler } from "../ecs/Scheduler";
+
 
 
 export class Simulation {
@@ -24,6 +26,8 @@ export class Simulation {
 
     readonly timeSystem = new TimeSystem();
 
+    readonly scheduler = new Scheduler();
+
     readonly clock = new SimulationClock();
 
     constructor() {
@@ -40,6 +44,10 @@ export class Simulation {
             this.ecs.citizens.add(entity,{
                 name: `Citizen ${i + 1}`,
                 age: 18 + Math.floor(Math.random() * 40)
+            });
+
+            this.scheduler.schedule(1, () => {
+                this.movementSystem.update();
             });
 
             this.ecs.velocities.add(entity, {
@@ -62,7 +70,9 @@ export class Simulation {
 
         this.timeSystem.update();
 
-        this.movementSystem.update();
+        this.scheduler.update(
+            this.timeSystem.getTick()
+        );
 
         this.citizens.update();
 
