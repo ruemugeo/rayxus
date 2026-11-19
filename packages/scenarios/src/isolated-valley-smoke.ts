@@ -2,7 +2,7 @@ import { RayxusKernel } from "../../engine-core/src/index.ts";
 import type { EngineSnapshot } from "../../engine-core/src/index.ts";
 import { createEconomyModule } from "../../modules/economy/src/index.ts";
 import { createWorldModule, type WorldState } from "../../modules/world/src/index.ts";
-import type { EconomyState } from "../../modules/economy/src/index.ts";
+import type { EconomyState, FoodStock } from "../../modules/economy/src/index.ts";
 
 export const ISOLATED_VALLEY_SCENARIO_ID = "isolated-valley-smoke";
 export const VALLEY_SETTLEMENT_ID = "settlement:isolated-valley";
@@ -26,7 +26,8 @@ function installInitialState(kernel: RayxusKernel): void {
       [VALLEY_SETTLEMENT_ID]: {
         entityId: VALLEY_SETTLEMENT_ID,
         name: "Isolated Valley",
-        population: 20
+        population: 20,
+        regionId: "region:valley"
       }
     },
     settlementShortages: {
@@ -36,15 +37,23 @@ function installInitialState(kernel: RayxusKernel): void {
     }
   };
 
+  const foodStock: FoodStock = {
+    entityId: VALLEY_FOOD_STOCK_ID,
+    settlementId: VALLEY_SETTLEMENT_ID,
+    quantity: 120,
+    shortageThreshold: 50,
+    unit: "food",
+    sources: [],
+    storageCapacity: 200,
+    spoilageRate: 0.01,
+    spoils: true
+  };
+
   const economy: EconomyState = {
+    goods: {},
+    resourceLinkages: {},
     foodStocks: {
-      [VALLEY_FOOD_STOCK_ID]: {
-        entityId: VALLEY_FOOD_STOCK_ID,
-        settlementId: VALLEY_SETTLEMENT_ID,
-        quantity: 120,
-        shortageThreshold: 50,
-        unit: "food"
-      }
+      [VALLEY_FOOD_STOCK_ID]: foodStock
     },
     consumerGroups: {
       [VALLEY_POPULATION_ID]: {
@@ -54,7 +63,10 @@ function installInitialState(kernel: RayxusKernel): void {
         population: 20,
         foodPerPersonPerTick: 1
       }
-    }
+    },
+    jobs: {},
+    jobLocations: {},
+    markets: {}
   };
 
   kernel.state.setModuleState("world", world);
