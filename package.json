@@ -1,0 +1,15 @@
+{
+  "name": "rayxus-vs-codex",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Rayxus v0.1 core simulation foundation.",
+  "scripts": {
+    "start": "node apps/headless-runner/src/run-scenario.ts",
+    "test": "node --test --test-isolation=none tests/*.test.ts",
+    "verify": "npm test"
+  },
+  "engines": {
+    "node": ">=25"
+  }
+}
