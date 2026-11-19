@@ -8,6 +8,10 @@ import type {
 } from "../../../engine-core/src/index.ts";
 import { ECONOMY_MODULE, createEmptyEconomyState } from "./economy-state.ts";
 import type { EconomyState } from "./economy-state.ts";
+import { WORLD_MODULE } from "../../world/src/world-module.ts";
+import type { WorldState } from "../../world/src/world-state.ts";
+
+const WORLD_STATE_KEY = "world";
 
 function roundQuantity(value: number): number {
   return Math.round(value * 10000) / 10000;
@@ -15,6 +19,13 @@ function roundQuantity(value: number): number {
 
 function getEconomyState(context: SystemContext): EconomyState {
   return context.state.getModuleState(ECONOMY_MODULE, createEmptyEconomyState());
+}
+
+function getWorldState(context: SystemContext): WorldState {
+  return context.state.getModuleState(WORLD_STATE_KEY, {
+    settlements: {},
+    settlementShortages: {}
+  });
 }
 
 export function executeFoodConsumption(context: SystemContext): void {
@@ -66,18 +77,19 @@ export function executeFoodConsumption(context: SystemContext): void {
       }
     });
 
-    const shortage = economy.settlementShortages[group.settlementId] ?? { active: false };
+    const world = getWorldState(context);
+    const shortage = world.settlementShortages[group.settlementId] ?? { active: false };
     const shortageStarted = !shortage.active && nextQuantity < stock.shortageThreshold;
 
     if (shortageStarted) {
       shortage.active = true;
       shortage.startedTick = context.time.tick;
-      economy.settlementShortages[group.settlementId] = shortage;
+      world.settlementShortages[group.settlementId] = shortage;
 
       const shortageDelta = context.journal.recordDelta({
-        module: ECONOMY_MODULE,
+        module: WORLD_MODULE,
         entityId: group.settlementId,
-        path: `economy.settlementShortages.${group.settlementId}.active`,
+        path: `world.settlementShortages.${group.settlementId}.active`,
         operation: "set",
         previousValue: false,
         nextValue: true,

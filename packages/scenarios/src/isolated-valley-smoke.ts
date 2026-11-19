@@ -1,6 +1,7 @@
 import { RayxusKernel } from "../../engine-core/src/index.ts";
 import type { EngineSnapshot } from "../../engine-core/src/index.ts";
 import { createEconomyModule } from "../../modules/economy/src/index.ts";
+import { createWorldModule, type WorldState, type Settlement, type SettlementShortage } from "../../modules/world/src/index.ts";
 import type { EconomyState } from "../../modules/economy/src/index.ts";
 
 export const ISOLATED_VALLEY_SCENARIO_ID = "isolated-valley-smoke";
@@ -20,6 +21,21 @@ function registerScenarioEntities(kernel: RayxusKernel): void {
 }
 
 function installInitialState(kernel: RayxusKernel): void {
+  const world: WorldState = {
+    settlements: {
+      [VALLEY_SETTLEMENT_ID]: {
+        entityId: VALLEY_SETTLEMENT_ID,
+        name: "Isolated Valley",
+        population: 20
+      }
+    },
+    settlementShortages: {
+      [VALLEY_SETTLEMENT_ID]: {
+        active: false
+      }
+    }
+  };
+
   const economy: EconomyState = {
     foodStocks: {
       [VALLEY_FOOD_STOCK_ID]: {
@@ -38,14 +54,10 @@ function installInitialState(kernel: RayxusKernel): void {
         population: 20,
         foodPerPersonPerTick: 1
       }
-    },
-    settlementShortages: {
-      [VALLEY_SETTLEMENT_ID]: {
-        active: false
-      }
     }
   };
 
+  kernel.state.setModuleState("world", world);
   kernel.state.setModuleState("economy", economy);
 }
 
@@ -63,6 +75,7 @@ export function createIsolatedValleySmokeScenario(options: ScenarioOptions = {})
     installInitialState(kernel);
   }
 
+  kernel.registerModule(createWorldModule());
   kernel.registerModule(createEconomyModule());
   return kernel;
 }

@@ -18,21 +18,14 @@ export type FoodConsumerGroup = {
   foodPerPersonPerTick: number;
 };
 
-export type SettlementShortage = {
-  active: boolean;
-  startedTick?: number;
-};
-
 export type EconomyState = ModuleState & {
   foodStocks: Record<EntityId, FoodStock>;
   consumerGroups: Record<EntityId, FoodConsumerGroup>;
-  settlementShortages: Record<EntityId, SettlementShortage>;
 };
 
 export function createEmptyEconomyState(): EconomyState {
   return {
     foodStocks: {},
-    consumerGroups: {},
-    settlementShortages: {}
+    consumerGroups: {}
   };
 }
