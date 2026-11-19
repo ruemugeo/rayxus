@@ -1,7 +1,7 @@
 import { RayxusKernel } from "../../engine-core/src/index.ts";
 import type { EngineSnapshot } from "../../engine-core/src/index.ts";
 import { createEconomyModule } from "../../modules/economy/src/index.ts";
-import { createWorldModule, type WorldState, type Settlement, type SettlementShortage } from "../../modules/world/src/index.ts";
+import { createWorldModule, type WorldState } from "../../modules/world/src/index.ts";
 import type { EconomyState } from "../../modules/economy/src/index.ts";
 
 export const ISOLATED_VALLEY_SCENARIO_ID = "isolated-valley-smoke";
