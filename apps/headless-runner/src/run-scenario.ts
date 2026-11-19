@@ -3,6 +3,7 @@ import {
   ISOLATED_VALLEY_SCENARIO_ID
 } from "../../../packages/scenarios/src/index.ts";
 import { JsonSnapshotAdapter } from "../../../packages/adapters/storage-json/src/index.ts";
+import { FileSnapshotAdapter } from "../../../packages/adapters/storage-file/src/index.ts";
 
 const kernel = createIsolatedValleySmokeScenario();
 kernel.runTicks(6);
@@ -12,8 +13,12 @@ const shortageExplanation = shortageEvent?.explanationId
   ? kernel.journal.getExplanation(shortageEvent.explanationId)
   : undefined;
 
-const adapter = new JsonSnapshotAdapter();
-const snapshotJson = adapter.serialize(kernel.snapshot());
+const jsonAdapter = new JsonSnapshotAdapter();
+const snapshot = kernel.snapshot();
+const snapshotJson = jsonAdapter.serialize(snapshot);
+
+const fileAdapter = new FileSnapshotAdapter();
+await fileAdapter.save(snapshot, "save.json");
 
 console.log("Rayxus v0.1 headless run");
 console.log(`Scenario: ${ISOLATED_VALLEY_SCENARIO_ID}`);
